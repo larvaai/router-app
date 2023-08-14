@@ -9,6 +9,9 @@ import Reviews from './pages/Host/Reviews'
 import Vans from "./pages/Vans/Vans"
 import HostVans from "./pages/Host/HostVans.jsx"
 import HostVanDetail from "./pages/Host/HostVanDetail"
+import HostVanInfo from "./pages/Host/HostVanInfo"
+import HostVanPricing from "./pages/Host/HostVanPricing"
+import HostVanPhotos from "./pages/Host/HostVanPhotos"
 import VanDetail from "./pages/Vans/VanDetail"
 import Layout from './components/Layout'
 import HostLayout from './components/HostLayout'
@@ -30,7 +33,12 @@ function App() {
             <Route path="income" element={<Income />} />
             <Route path="reviews" element={<Reviews />} />
             <Route path="vans" element={<HostVans />} />
-            <Route path="vans/:id" element={<HostVanDetail />} />
+            <Route path="vans/:id" element={<HostVanDetail />}>
+              <Route index element={<HostVanInfo />} />
+              <Route path="pricing" element={<HostVanPricing />} />
+              <Route path="photos" element={<HostVanPhotos />} />
+
+            </Route>
           </Route>
         </Route>
       </Routes>
