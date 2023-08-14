@@ -38,21 +38,21 @@ export default function Vans() {
           <button 
             onClick={() => setSearchParams({ type: "simple" })}
             className={`van-type simple ${typeFilter === "simple" ? "selected" : null}`}
-            >Simple</button>
+          >Simple</button>
           <button 
             onClick={() => setSearchParams({ type: "luxury" })}
             className={`van-type luxury ${typeFilter === "luxury" ? "selected" : null}`}
-            >Luxury</button>
+          >Luxury</button>
           <button 
             onClick={() => setSearchParams({ type: "rugged" })}
             className={`van-type rugged ${typeFilter === "rugged" ? "selected" : null}`}
-            >Rugged</button>
+          >Rugged</button>
           {typeFilter 
             ? (
-            <button 
+          <button 
             onClick={() => setSearchParams({ })}
             className="van-type clear-filters"
-            >Clear filters</button>
+          >Clear filters</button>
           ) : null}
           
         </div>
