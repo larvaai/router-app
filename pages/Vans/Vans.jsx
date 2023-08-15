@@ -1,17 +1,17 @@
 import React from "react"
-import { Link, useSearchParams } from "react-router-dom"
+import { Link, useSearchParams, useLoaderData } from "react-router-dom"
+import { getVans } from '../../api'
+
+export function loader() {
+  return getVans()
+}
 
 export default function Vans() {
-  const [vans, setVans] = React.useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
+  const [error, setError] = React.useState(null)
+  const vans = useLoaderData()
 
   const typeFilter = searchParams.get("type");
-  
-  React.useEffect(() => {
-    fetch("/api/vans")
-      .then(res => res.json())
-      .then(data => setVans(data.vans));
-  }, [typeFilter]) 
 
   const displayedVans = typeFilter
     ? vans.filter(van => van.type === typeFilter)
@@ -37,26 +37,41 @@ export default function Vans() {
     )
   )
 
+  function handleFilterChange(key, value) {
+    setSearchParams(prevParams => {
+      if (value === null) {
+        prevParams.delete(key)
+      } else {
+        prevParams.set(key, value)
+      }
+      return prevParams
+    })
+  }
+
+  if (error) {
+    return <h1>There was an error: {error.message}</h1>
+  }
+
     return (
       <div className="van-list-container">
         <h1>Explore our van options</h1>
         <div className="van-list-filter-buttons">
           <button 
-            onClick={() => setSearchParams({ type: typeFilter && typeFilter === "simple" ? "" : "simple" })}
+            onClick={() => handleFilterChange("type", "simple")}
             className={`van-type simple ${typeFilter === "simple" ? "selected" : null}`}
           >Simple</button>
           <button 
-            onClick={() => setSearchParams({ type: typeFilter && typeFilter === "luxury" ? "" : "luxury" })}
+            onClick={() => handleFilterChange("type", "luxury")}
             className={`van-type luxury ${typeFilter === "luxury" ? "selected" : null}`}
           >Luxury</button>
           <button 
-            onClick={() => setSearchParams({ type: typeFilter && typeFilter === "rugged" ? "" : "rugged" })}
+            onClick={() => handleFilterChange("type", "rugged")}
             className={`van-type rugged ${typeFilter === "rugged" ? "selected" : null}`}
           >Rugged</button>
           {typeFilter 
             ? (
           <button 
-            onClick={() => setSearchParams({ })}
+          onClick={() => handleFilterChange("type", "")}
             className="van-type clear-filters"
           >Clear filters</button>
           ) : null}
