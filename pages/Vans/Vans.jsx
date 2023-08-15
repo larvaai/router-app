@@ -11,7 +11,7 @@ export default function Vans() {
     fetch("/api/vans")
       .then(res => res.json())
       .then(data => setVans(data.vans));
-  }, []) 
+  }, [typeFilter]) 
 
   const displayedVans = typeFilter
     ? vans.filter(van => van.type === typeFilter)
@@ -19,7 +19,13 @@ export default function Vans() {
 
   const vanElements = displayedVans.map(van => (
     <div key={van.id} className="van-tile">
-      <Link to={van.id}>
+      <Link 
+        to={van.id} 
+        state={{ 
+          search: `?${searchParams.toString()}`,
+          type: typeFilter
+        }}
+      >
         <img src={van.imageUrl} />
         <div className="van-info">
           <h3>{van.name}</h3>
@@ -36,15 +42,15 @@ export default function Vans() {
         <h1>Explore our van options</h1>
         <div className="van-list-filter-buttons">
           <button 
-            onClick={() => setSearchParams({ type: "simple" })}
+            onClick={() => setSearchParams({ type: typeFilter && typeFilter === "simple" ? "" : "simple" })}
             className={`van-type simple ${typeFilter === "simple" ? "selected" : null}`}
           >Simple</button>
           <button 
-            onClick={() => setSearchParams({ type: "luxury" })}
+            onClick={() => setSearchParams({ type: typeFilter && typeFilter === "luxury" ? "" : "luxury" })}
             className={`van-type luxury ${typeFilter === "luxury" ? "selected" : null}`}
           >Luxury</button>
           <button 
-            onClick={() => setSearchParams({ type: "rugged" })}
+            onClick={() => setSearchParams({ type: typeFilter && typeFilter === "rugged" ? "" : "rugged" })}
             className={`van-type rugged ${typeFilter === "rugged" ? "selected" : null}`}
           >Rugged</button>
           {typeFilter 
