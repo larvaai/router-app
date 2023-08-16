@@ -1,16 +1,16 @@
 import React from "react"
 import { Link, useParams, useLocation, useLoaderData } from "react-router-dom"
 import { getVans } from '../../api'
+import { requireAuth } from "../../utils"
 
-export function loader({ params }) {
-  console.log(params)
+export async function loader({ params, request }) {
+  await requireAuth(request)
   return getVans(params.id)
 }
 
 export default function VanDetail() {
   const location = useLocation();
   const van = useLoaderData();
-  console.log(van);
 
   // React.useEffect(() => {
   //   fetch(`/api/vans/${params.id}`)

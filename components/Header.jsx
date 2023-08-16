@@ -2,6 +2,11 @@ import React from 'react'
 import { Link, NavLink } from 'react-router-dom'
 
 export default function Header() {
+
+  function fakeLogOut() {
+    localStorage.removeItem("loggedin")
+  }
+  
   return (
   <div>
     <header>
@@ -19,6 +24,7 @@ export default function Header() {
           to="/vans"
           className={({isActive}) => isActive ? "active-link" : null}
         >Vans</NavLink>
+        <button onClick={fakeLogOut}>X</button>
       </nav>
     </header>
   </div>
