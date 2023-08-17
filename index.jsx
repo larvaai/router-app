@@ -31,7 +31,7 @@ import { requireAuth } from './utils'
 import "./server"
 
 const router = createBrowserRouter(createRoutesFromElements(
-  <Route path="/" errorElement={<Error />} element={<Layout />}>
+  <Route path="/" element={<Layout />}>
     <Route index element={<Home />} />
     <Route path="about" element={<About />} />
     <Route
@@ -42,11 +42,13 @@ const router = createBrowserRouter(createRoutesFromElements(
     />
     <Route 
       path="vans" 
+      errorElement={<Error />}
       element={<Vans />}
       loader={vansLoader}
     />
     <Route 
       path="vans/:id" 
+      errorElement={<Error />}
       element={<VanDetail />}
       loader={vanDetailLoader}
     />
@@ -69,11 +71,13 @@ const router = createBrowserRouter(createRoutesFromElements(
       />
       <Route 
         path="vans" 
+        errorElement={<Error />}
         element={<HostVans />}
         loader={hostVansLoader} 
       />
       <Route 
         path="vans/:id" 
+        errorElement={<Error />}
         element={<HostVanDetail />}
         loader={hostVanDetailLoader}
       >
